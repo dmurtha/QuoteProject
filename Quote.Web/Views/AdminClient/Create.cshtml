@@ -1,0 +1,129 @@
+﻿@model ClientViewModel
+
+@{
+    ViewBag.Title = "Admin Create";
+    Layout = "_layout";
+}
+
+<h2 class="m-4">Admin Create Client</h2>
+<br />
+<form method="post" asp-action="Create">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="Timestamp" />
+    <input type="hidden" asp-for="ClientAddress.Id" />
+    <input type="hidden" asp-for="ClientGuid" />
+    @{ if (@Model.Id != 0)
+        {
+            <input name="original.Id" value="@Model.Id" type="hidden" />
+            <input asp-for="@Model.Timestamp" name="original.Timestamp" type="hidden" />
+            <input name="original.ClientName" value="@Model.ClientName" type="hidden" />
+            <input name="original.ClientType" value="@Model.ClientType" type="hidden" />
+            <input name="original.ClientGuid" value="@Model.ClientGuid" type="hidden" />
+            <input name="original.ClientAddress.Id" value="@Model.ClientAddress.Id" type="hidden" />
+            <input name="original.ClientAddress.Timestamp" id="original.ClientAddress.Timestamp" asp-for="@Model.ClientAddress.Timestamp" type="hidden" />
+            <input name="original.ClientAddress.AddressName" value="@Model.ClientAddress.AddressName" type="hidden" />
+            <input name="original.ClientAddress.AddressStreet" value="@Model.ClientAddress.AddressStreet" type="hidden" />
+            <input name="original.ClientAddress.Apt" value="@Model.ClientAddress.Apt" type="hidden" />
+            <input name="original.ClientAddress.City" value="@Model.ClientAddress.City" type="hidden" />
+            <input name="original.ClientAddress.State" value="@Model.ClientAddress.State" type="hidden" />
+            <input name="original.ClientAddress.ZipCode" value="@Model.ClientAddress.ZipCode" type="hidden" />
+            <input name="original.ClientAddress.Country" value="@Model.ClientAddress.Country" type="hidden" />
+            @for (int i = 0; i < Model.ClientAddress.AddressLevels.Count; i++)
+            {
+                <input name="original.ClientAddress.AddressLevels[@i].Id" value="@Model.ClientAddress.AddressLevels[i].Id " type="hidden" />
+                <input name="original.ClientAddress.AddressLevels[@i].AddressType" value="@Model.ClientAddress.AddressLevels[i].AddressType" type="hidden" />
+                <input name="original.ClientAddress.AddressLevels[@i].Timestamp" id="original.ClientAddress.AddressLevels[@i].Timestamp" asp-for="@Model.ClientAddress.AddressLevels[i].Timestamp"  type="hidden" />
+                <input name="original.ClientAddress.AddressLevels[@i].IsCheck" value="@Model.ClientAddress.AddressLevels[i].IsCheck.ToString()" type="hidden" />
+            }
+        }
+
+    }
+    <div class="row">
+        <div class="form-group col-sm-6 required">
+            <label class="form-control-label col-form-label" asp-for="ClientName"></label>
+            <input class="form-control" asp-for="ClientName" />
+            <span asp-validation-for="ClientName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-sm-6 required">
+            <label class="form-control-label  col-form-label" asp-for="ClientType"></label>
+            <select class="custom-select" asp-for="ClientType" asp-items="Html.GetEnumSelectList<ClientTypes>()">
+                <option selected="selected" value="">Please select</option>
+            </select>
+            <span asp-validation-for="ClientType" class="text-danger">The Client Type field is required.</span>
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="form-group  col-sm-6 required">
+            <label class="form-control-label" asp-for="ClientAddress.AddressName"></label>
+            <input class="form-control" asp-for="ClientAddress.AddressName" />
+            <span asp-validation-for="ClientAddress.AddressName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group  col-sm-6 required">
+            <label class="form-control-label" asp-for="ClientAddress.AddressStreet"></label>
+            <input class="form-control" asp-for="ClientAddress.AddressStreet" />
+            <span asp-validation-for="ClientAddress.AddressStreet" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group  col-sm-6">
+            <label class="form-control-label" asp-for="ClientAddress.Apt"></label>
+            <input class="form-control" asp-for="ClientAddress.Apt" />
+            <span asp-validation-for="ClientAddress.Apt" class="text-danger"></span>
+        </div>
+        <div class="form-group  col-sm-6">
+            <label class="form-control-label" asp-for="ClientAddress.ZipCode"></label>
+            <input class="form-control" asp-for="ClientAddress.ZipCode" />
+            <span asp-validation-for="ClientAddress.ZipCode" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group  col-sm-6">
+            <label class="form-control-label" asp-for="ClientAddress.State"></label>
+            <input class="form-control" asp-for="ClientAddress.State" />
+            <span asp-validation-for="ClientAddress.State" class="text-danger"></span>
+        </div>
+        <div class="form-group  col-sm-6">
+            <label class="form-control-label" asp-for="ClientAddress.City"></label>
+            <input class="form-control" asp-for="ClientAddress.City" />
+            <span asp-validation-for="ClientAddress.City" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group required   col-sm-6">
+            <label class="form-control-label" asp-for="ClientAddress.Country"></label>
+            <input class="form-control" asp-for="ClientAddress.Country" />
+            <span asp-validation-for="ClientAddress.Country" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group required">
+        <label class="form-control-label">Address Type</label>
+    </div>
+    <div class="form-group">
+        @for (int i = 0; i < Model.ClientAddress.AddressLevels.Count; i++)
+        {
+
+            <div class="form-check form-check-inline">
+                <label class="form-control-label">
+                    <input type="hidden" id="ClientAddress.AddressLevels[@i].Id" name="ClientAddress.AddressLevels[@i].Id" value="@Model.ClientAddress.AddressLevels[i].Id" />
+                    <input type="hidden" id="ClientAddress.AddressLevels[@i].AddressType" name="ClientAddress.AddressLevels[@i].AddressType" value="@Model.ClientAddress.AddressLevels[i].AddressType" />
+                    <input class="form-check-input" type="checkbox" asp-for="ClientAddress.AddressLevels[i].IsCheck" />@Model.ClientAddress.AddressLevels[i].AddressType.GetDisplayName()
+                </label>
+            </div>
+        }
+    </div>
+
+    <span asp-validation-for="ClientAddress.AddressCount" class="text-danger"></span>
+    <br /><br />
+    <div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+    </div>
+
+</form>
+
+

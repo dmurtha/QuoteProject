@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" asp-href-include="~/bootstrap/dist/css/*.min.css" />
+    <script asp-src-include="~/jquery/dist/*.min.js"></script>
+    <script asp-src-include="~/bootstrap/dist/js/*.min.js"></script>
+    <style>
+        .field-validation-valid {
+            display: none;
+        }
+        .required .form-control-label:after {
+            content: "*";
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="mt-4"><partial name="_Menu" /></div>
+        @RenderBody()
+    </div>
+</body>
+</html>

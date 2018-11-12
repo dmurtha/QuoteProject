@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ClientDisplayViewModel>
+
+@{
+    ViewBag.Title = "Admin Client";
+    Layout = "_layout";
+}
+
+<h2 class="m-4">Client Admin</h2>
+
+<table class="table table-lg table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Client Name</th>
+            <th scope="col">Client Type</th>
+            <th scope="col">Address Name</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+            <td scope="row" >@c.ClientName</td>
+            <td>@c.ClientType</td>
+            <td>@c.AddressName</td>
+            <td>
+                <form>
+                    <input type="hidden" name="Id" value="@c.Id" />
+                    <input type="hidden" name="AddressId" value="@c.AddressId" />
+                    <button type="submit" asp-action="Delete" formmethod="post" class="btn btn-sm btn-danger">Delete</button>
+                    <button type="submit" asp-action="Edit" formmethod="get" class="btn btn-sm btn-primary">Edit</button>
+                </form>
+                    </td>
+            </tr>
+        }
+        </tbody>
+</table>
+<a asp-action="Create" class="btn btn-primary">Create</a>
